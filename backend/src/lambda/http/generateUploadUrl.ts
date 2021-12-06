@@ -14,6 +14,16 @@ export const handler = middy(
  
     try {
       url = await createAttachmentPresignedUrl(todoId)
+
+      return {
+        'statusCode': 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        },
+        'body': JSON.stringify({
+          uploadUrl: url
+        })
+      }
     } catch(e) {
       return {
         statusCode: 404,
