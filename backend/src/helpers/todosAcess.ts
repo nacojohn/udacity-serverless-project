@@ -57,9 +57,9 @@ export const TodosAccess = {
             userId,
             todoId
           },
-          UpdateExpression: 'set #name = :name, dueDate = :dueDate, done = :done',
+          UpdateExpression: 'set #N = :name, dueDate = :dueDate, done = :done',
           ExpressionAttributeNames: {
-            '#name': 'name'
+            '#N': 'name'
           },
           ExpressionAttributeValues: {
             ':name': todoUpdate.name,

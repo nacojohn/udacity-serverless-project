@@ -25,7 +25,7 @@ provider:
   # ${self:provider.environment.ATTACHMENT_S3_BUCKET}
   environment:
     TODOS_TABLE: Todos-${self:provider.stage}
-    TODOS_USER_ID_INDEX: UserIdIndex
+    TODOID_INDEX: todoIdIndex
     ATTACHMENT_S3_BUCKET: serverless-c4-todo-images-nacojohn-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
     REGION: ${self:provider.region}
@@ -99,7 +99,7 @@ functions:
           request:
             # Schema that will be used to validate incoming requests
             schema:
-              application/json: ${file(models/update-todo-request.json)}
+              application/json: ${file(models/update-todo-model.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -190,14 +190,14 @@ resources:
         KeySchema:
           - AttributeName: userId
             KeyType: HASH
-          - AttributeName: createdAt
+          - AttributeName: todoId
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:provider.environment.TODOS_TABLE}
-        GlobalSecondaryIndexes:
-          - IndexName: ${self:provider.environment.TODOS_USER_ID_INDEX}
+        LocalSecondaryIndexes:
+          - IndexName: ${self:provider.environment.TODOID_INDEX}
             KeySchema:
-              - AttributeName: todoId
+              - AttributeName: userId
                 KeyType: HASH
               - AttributeName: createdAt
                 KeyType: RANGE

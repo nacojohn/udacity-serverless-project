@@ -68,6 +68,8 @@ export const updateTodo = async (
     updatedTodo: UpdateTodoRequest
 ) => {
     const logger = createLogger('UpdateTodo')
+
+    logger.info(`Updating todo ${todoId} for user ${userId}`, { userId, todoId, todoUpdate: updateTodo })
     const todo = await TodosAccess.updateTodo(userId, todoId, updatedTodo)
     logger.info('Updated todo', { todo })
     return todo
