@@ -15,7 +15,7 @@ export const handler = middy(
     let getUser =  getUserId(event);
 
     try {
-      await deleteTodo(todoId, getUser)
+      await deleteTodo(getUser, todoId)
     } catch(e) {
       return { 
         statusCode: 404,
